@@ -1,0 +1,17 @@
+description: |
+  Binding for a generic e-paper display controlled via SPI, with optional
+  reset, busy, and DC GPIOs.
+
+compatible: "vnd,epaper"
+include: spi-device.yaml
+
+properties:
+  dc-gpios:
+    type: phandle-array
+    required: false
+  reset-gpios:
+    type: phandle-array
+    required: false
+  busy-gpios:
+    type: phandle-array
+    required: false

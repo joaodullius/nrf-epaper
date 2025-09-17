@@ -1,0 +1,52 @@
+// To get started, press Ctrl+Space to bring up the completion menu and view the available nodes.
+
+// You can also use the buttons in the sidebar to perform actions on nodes.
+// Actions currently available include:
+
+// * Enabling / disabling the node
+// * Adding the bus to a bus
+// * Removing the node
+// * Connecting ADC channels
+
+// For more help, browse the DeviceTree documentation at https://docs.zephyrproject.org/latest/guides/dts/index.html
+// You can also visit the nRF DeviceTree extension documentation at https://docs.nordicsemi.com/bundle/nrf-connect-vscode/page/guides/ncs_configure_app.html#devicetree-support-in-the-extension
+
+&spi21 {
+    status = "okay";
+    cs-gpios = <&gpio2 10 GPIO_ACTIVE_LOW>;
+    pinctrl-0 = <&spi21_default>;
+    pinctrl-1 = <&spi21_sleep>;
+    pinctrl-names = "default", "sleep";
+    epaper: epaper@0 {
+        compatible = "vnd,epaper";
+        reg = <0>;
+        spi-max-frequency = <1600000>;
+        label = "EPaper";
+        dc-gpios    = <&gpio2 9 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpio1 12 GPIO_ACTIVE_HIGH>;
+        busy-gpios  = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+    };
+};
+
+&pinctrl {
+    spi21_default: spi21_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 2, 6)>,
+                    <NRF_PSEL(SPIM_MOSI, 2, 8)>;
+        };
+    };
+
+    spi21_sleep: spi21_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 2, 6)>;
+        };
+    };
+};
+
+/ {
+    aliases {
+        /delete-property/ led2;
+    };
+};
+
+/delete-node/ &led2;

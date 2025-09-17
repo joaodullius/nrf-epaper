@@ -86,9 +86,11 @@ void epaper_reset_sequence(void)
     set_pin(&reset, 1); k_msleep(10);
 
     // Wait for BUSY to go HIGH
+    printk("Waiting for BUSY to go HIGH...\n");
     while (get_pin(&busy) == 0) {
         k_msleep(1);
     }
+    printk("BUSY is HIGH\n");
     k_msleep(10);
 }
 
